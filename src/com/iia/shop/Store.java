@@ -71,8 +71,12 @@ public class Store {
 			
 			displayVehicule(vehicule);
 			setVehicule(vehicule);*/
+			System.out.println("Veuillez saisir l'identifiant du véhicule");
 			
-			
+			//int Id = 0;
+			//vehicule.setId(Id);
+			boolean result1 = vDao.update(vehicule);
+			System.out.println("resultat : " + result1);
 			break;
 		case 3:
 			/*ArrayList<Vehicule> vehicules = readAll();
@@ -101,8 +105,8 @@ public class Store {
 		case 5:
 			/*System.out.println("Veuillez saisir l'id du véhicule");
 			delete(Store.sc.nextInt());*/
-			result = vDao.delete(vehicule);
-			System.out.println("resultat : " + result);
+			result1 = vDao.delete(vehicule);
+			System.out.println("resultat : " + result1);
 			
 			break;
 		default:
