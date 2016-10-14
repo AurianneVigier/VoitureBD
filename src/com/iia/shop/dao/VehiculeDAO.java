@@ -2,6 +2,7 @@ package com.iia.shop.dao;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
@@ -24,12 +25,12 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 		String req = "INSERT INTO " + VehiculeDAO.NOMTABLE + " (" + VehiculeDAO.MARQUE + ", " + VehiculeDAO.ANNEE
 				+ ", " + VehiculeDAO.VITESSE + ", " + VehiculeDAO.MODELE + ", " + VehiculeDAO.COULEUR
 				+ ", " + VehiculeDAO.PRIX
-				+ ") VALUES ('" + object.getMarque() + "', '" + object.getYear() + "', '" + object.getSpeed() + "', '"
-				+ object.getModel() + "', '" + object.getColor() + "', '" + object.getPrice() + "')";
+				+ ") VALUES ('" + object.getMarque() + "', " + object.getYear() + ", " + object.getSpeed() + ", '"
+				+ object.getModel() + "', '" + object.getColor() + "', " + object.getPrice() + ")";
 
 		try {
-			PreparedStatement st = Connexion.getConnection().prepareStatement(req);
-			if (st.executeUpdate() == 1) {
+			Statement st = Connexion.getConnection().createStatement();
+			if (st.executeUpdate(req) == 1) {
 				return true;
 			}
 		} catch (SQLException e) {

@@ -45,9 +45,10 @@ public class Store {
 			break;
 		case 2:			
 			System.out.println("Veuillez saisir l'identifiant du véhicule");
-			vehicule = read(Store.sc.nextInt());
-			displayVehicule(vehicule);
+			vehicule = new Vehicule();
+			vehicule.setId(sc.nextInt());
 			setVehicule(vehicule);
+			
 			vDao.update(vehicule);
 			break;
 		case 3:			
@@ -57,21 +58,17 @@ public class Store {
 			}
 			
 			break;
-
 		case 4:
 			System.out.println("Veuillez saisir l'id du véhicule");
-			vehicule = read(Store.sc.nextInt());
+			vehicule = read(sc.nextInt());
 
 			displayVehicule(vehicule);
-			
-			Vehicule vehicule1 = (Vehicule) vDao.findById(1);
-			System.out.println(vehicule1.getMarque());
 			break;
 
 		case 5:
 			System.out.println("Veuillez saisir l'id du véhicule");
-			delete(Store.sc.nextInt());
 			vehicule = new Vehicule();
+			vehicule.setId(sc.nextInt());
 			vDao.delete(vehicule);
 			break;
 		default:
@@ -111,6 +108,9 @@ public class Store {
 
 		System.out.println("Veuillez saisir l'année du véhicule");
 		vehicule.setYear(Store.sc.nextInt());
+		
+		System.out.println("Veuillez saisir la vitesse du véhicule");
+		vehicule.setSpeed(Store.sc.nextInt());
 
 		System.out.println("Veuillez saisir le modèle du véhicule");
 		vehicule.setModel(Store.sc.next());
