@@ -30,91 +30,56 @@ public class Store {
 		System.out.println("Votre choix");
 		int choice = Store.sc.nextInt();
 
-		Vehicule vehicule = null;
+		Vehicule vehicule;
 		VehiculeDAO vDao = new VehiculeDAO();
 
 		switch (choice) {
-		case 1:
-			/*vehicule = new Vehicule();
-			create(vehicule);*/
-			
+		case 1:			
 			// Création du véhicule
-			vDao = new VehiculeDAO();
+			vehicule = new Vehicule();
 			
 			// Créer un véhicule
-			Vehicule newVehicule = new Vehicule();
-			System.out.println("Veuillez saisir la marque du véhicule");
-			vehicule.setMarque(Store.sc.next());
-
-			System.out.println("Veuillez saisir l'année du véhicule");
-			vehicule.setYear(Store.sc.nextInt());
-			
-			System.out.println("Veuillez saisir la vitesse du véhicule");
-			vehicule.setSpeed(Store.sc.nextInt());
-
-			System.out.println("Veuillez saisir le modèle du véhicule");
-			vehicule.setModel(Store.sc.next());
-
-			System.out.println("Veuillez saisir la couleur du véhicule");
-			vehicule.setColor(Store.sc.next());
-
-			System.out.println("Veuillez saisir le prix du véhicule");
-			vehicule.setPrice(Store.sc.nextDouble());
-			boolean result = vDao.create(newVehicule);
-			
-			System.out.println("resultat : " + result);
-			
+			setVehicule(vehicule);
+			create(vehicule);
+			vDao.create(vehicule);
 			break;
-		case 2:
-			/*System.out.println("Veuillez saisir l'id du véhicule");
-			vehicule = read(Store.sc.nextInt());
-			
-			displayVehicule(vehicule);
-			setVehicule(vehicule);*/
+		case 2:			
 			System.out.println("Veuillez saisir l'identifiant du véhicule");
-			
-			//int Id = 0;
-			//vehicule.setId(Id);
-			boolean result1 = vDao.update(vehicule);
-			System.out.println("resultat : " + result1);
+			vehicule = read(Store.sc.nextInt());
+			displayVehicule(vehicule);
+			setVehicule(vehicule);
+			vDao.update(vehicule);
 			break;
-		case 3:
-			/*ArrayList<Vehicule> vehicules = readAll();
-
-			for (Vehicule vehicule2 : vehicules) {
-				displayVehicule(vehicule2);
-			}*/
-			
-			List<Vehicule> voitures = vDao.findAll();
-			for (Vehicule voiture2 : voitures) {
-				System.out.println(voiture2.getId());
+		case 3:			
+			vehicules = (ArrayList<Vehicule>) vDao.findAll();
+			for (Vehicule voiture2 : vehicules) {
+				displayVehicule(voiture2);
 			}
 			
 			break;
 
 		case 4:
-			/*System.out.println("Veuillez saisir l'id du véhicule");
+			System.out.println("Veuillez saisir l'id du véhicule");
 			vehicule = read(Store.sc.nextInt());
 
-			displayVehicule(vehicule);*/
+			displayVehicule(vehicule);
 			
 			Vehicule vehicule1 = (Vehicule) vDao.findById(1);
 			System.out.println(vehicule1.getMarque());
 			break;
 
 		case 5:
-			/*System.out.println("Veuillez saisir l'id du véhicule");
-			delete(Store.sc.nextInt());*/
-			result1 = vDao.delete(vehicule);
-			System.out.println("resultat : " + result1);
-			
+			System.out.println("Veuillez saisir l'id du véhicule");
+			delete(Store.sc.nextInt());
+			vehicule = new Vehicule();
+			vDao.delete(vehicule);
 			break;
 		default:
 			break;
 		}
 	}
 	
-	/*private static void create(Vehicule vehicule) {
+	private static void create(Vehicule vehicule) {
 		Store.vehicules.add(vehicule);
 	}
 
@@ -157,7 +122,7 @@ public class Store {
 		vehicule.setPrice(Store.sc.nextDouble());
 	}
 
-	private static void assets() {
+	/*private static void assets() {
 		//Vehicule v1 = new Vehicule("peugeot", 2016, 50, "3008", "blanc", 20000);
 		//Vehicule v2 = new Vehicule("audi", 2016, 90, "A5", "noire", 47000);
 
