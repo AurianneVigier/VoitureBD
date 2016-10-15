@@ -1,11 +1,9 @@
 package com.iia.shop;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
 import com.iia.shop.dao.VehiculeDAO;
 import com.iia.shop.entity.Vehicule;
+
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Store {
 
@@ -14,7 +12,7 @@ public class Store {
 
 	public static void main(String[] args) {
 		
-		Store.vehicules = new ArrayList<Vehicule>();
+		vehicules = new ArrayList<Vehicule>();
 
 		//assets();
 
@@ -25,7 +23,7 @@ public class Store {
 		System.out.println("4 - sélectionner un véhicule");
 		System.out.println("5 - supprimer un véhicule");
 
-		Store.sc = new Scanner(System.in);
+		sc = new Scanner(System.in);
 
 		System.out.println("Votre choix");
 		int choice = Store.sc.nextInt();
@@ -61,10 +59,8 @@ public class Store {
 		case 4:
 			System.out.println("Veuillez saisir l'id du véhicule");
 			vehicule = read(sc.nextInt());
-
 			displayVehicule(vehicule);
 			break;
-
 		case 5:
 			System.out.println("Veuillez saisir l'id du véhicule");
 			vehicule = new Vehicule();
@@ -77,19 +73,19 @@ public class Store {
 	}
 	
 	private static void create(Vehicule vehicule) {
-		Store.vehicules.add(vehicule);
+		vehicules.add(vehicule);
 	}
 
 	private static void delete(int index) {
-		Store.vehicules.remove(index);
+		vehicules.remove(index);
 	}
 
 	private static ArrayList<Vehicule> readAll() {
-		return Store.vehicules;
+		return vehicules;
 	}
 
 	private static Vehicule read(int index) {
-		return Store.vehicules.get(index);
+		return vehicules.get(index);
 	}
 
 	private static void displayVehicule(Vehicule vehicule) {
@@ -104,22 +100,22 @@ public class Store {
 
 	private static void setVehicule(Vehicule vehicule) {
 		System.out.println("Veuillez saisir la marque du véhicule");
-		vehicule.setMarque(Store.sc.next());
+		vehicule.setMarque(sc.next());
 
 		System.out.println("Veuillez saisir l'année du véhicule");
-		vehicule.setYear(Store.sc.nextInt());
+		vehicule.setYear(sc.nextInt());
 		
 		System.out.println("Veuillez saisir la vitesse du véhicule");
-		vehicule.setSpeed(Store.sc.nextInt());
+		vehicule.setSpeed(sc.nextInt());
 
 		System.out.println("Veuillez saisir le modèle du véhicule");
-		vehicule.setModel(Store.sc.next());
+		vehicule.setModel(sc.next());
 
 		System.out.println("Veuillez saisir la couleur du véhicule");
-		vehicule.setColor(Store.sc.next());
+		vehicule.setColor(sc.next());
 
 		System.out.println("Veuillez saisir le prix du véhicule");
-		vehicule.setPrice(Store.sc.nextDouble());
+		vehicule.setPrice(sc.nextDouble());
 	}
 
 	/*private static void assets() {

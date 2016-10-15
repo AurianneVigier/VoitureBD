@@ -1,4 +1,6 @@
 package com.iia.shop.dao;
+import com.iia.shop.dao.Connexion;
+import com.iia.shop.entity.Vehicule;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -6,19 +8,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
-import java.util.List;
-
-import com.iia.shop.entity.Vehicule;
 
 public class VehiculeDAO implements IDAO<Vehicule>{
+	private static final String NOMTABLE = "Voitures";
+	private static final String ID = "Id";
 	private static final String MARQUE = "Brand";
 	private static final String ANNEE = "Year";
 	private static final String VITESSE = "Speed";
 	private static final String MODELE = "Model";
 	private static final String COULEUR = "Color";
 	private static final String PRIX = "Price";
-	private static final String NOMTABLE = "Voitures";
-	private static final String ID = "Id";
 
 	@Override
 	public boolean create(Vehicule object) {
@@ -26,7 +25,7 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 				+ ", " + VehiculeDAO.VITESSE + ", " + VehiculeDAO.MODELE + ", " + VehiculeDAO.COULEUR
 				+ ", " + VehiculeDAO.PRIX
 				+ ") VALUES ('" + object.getMarque() + "', " + object.getYear() + ", " + object.getSpeed() + ", '"
-				+ object.getModel() + "', '" + object.getColor() + "', " + object.getPrice() + ")";
+				+ object.getModel() + "', '" + object.getColor() + "', " + object.getPrice() + ");";
 
 		try {
 			Statement st = Connexion.getConnection().createStatement();
@@ -42,26 +41,17 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 
 	@Override
 	public boolean update(Vehicule object) {
-		String req = String.format("UPDATE %s SET %s=%s, %s=%s, %s=%s, %s=%s, %s=%s, %s=%s WHERE %s=?",
-				VehiculeDAO.NOMTABLE,
-				VehiculeDAO.MARQUE,
-				object.getMarque(),
-				VehiculeDAO.ANNEE,
-				object.getYear(),
-				VehiculeDAO.VITESSE,
-				object.getSpeed(),
-				VehiculeDAO.MODELE,
-				object.getModel(),
-				VehiculeDAO.COULEUR,
-				object.getColor(),
-				VehiculeDAO.PRIX,
-				object.getPrice(),
-				VehiculeDAO.ID);
+		String req = "UPDATE " + VehiculeDAO.NOMTABLE + " SET " + VehiculeDAO.MARQUE + " = '" + object.getMarque() + "', "
+				+ VehiculeDAO.ANNEE + " = " + object.getYear() + ", "
+				+ VehiculeDAO.VITESSE + " = " + object.getSpeed() + ", "
+				+ VehiculeDAO.MODELE + " = '" + object.getModel() + "', "
+				+ VehiculeDAO.COULEUR + " = '" + object.getColor() + "', "
+				+ VehiculeDAO.PRIX + " = " + object.getPrice()
+				+ " WHERE " + VehiculeDAO.ID + " = " + object.getId();
 		
 		try {
-			PreparedStatement st = Connexion.getConnection().prepareStatement(req);
-			st.setInt(1, object.getId());
-			if (st.executeUpdate() >= 1) {
+			Statement st = Connexion.getConnection().createStatement();
+			if (st.executeUpdate(req) >= 1) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -93,11 +83,19 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 		String req = String.format("SELECT * FROM %s WHERE %s=%d", VehiculeDAO.NOMTABLE, VehiculeDAO.ID, id);
 
 		try {
-			PreparedStatement st = Connexion.getConnection().prepareStatement(req);
-			ResultSet rs = st.executeQuery();
+			Statement st = Connexion.getConnection().createStatement();
+			ResultSet rs = st.executeQuery(req);
 
 			if (rs.next()) {
-				return this.cursorToVehicule(rs);
+				Vehicule voiture = new Vehicule();
+				voiture.setId(rs.getInt(VehiculeDAO.ID));
+				voiture.setMarque(rs.getString(VehiculeDAO.MARQUE));
+				voiture.setYear(rs.getInt(VehiculeDAO.ANNEE));
+				voiture.setSpeed(rs.getInt(VehiculeDAO.VITESSE));
+				voiture.setModel(rs.getString(VehiculeDAO.MODELE));
+				voiture.setColor(rs.getString(VehiculeDAO.COULEUR));
+				voiture.setPrice(rs.getInt(VehiculeDAO.PRIX));
+				return voiture;
 			}
 		} catch (SQLException e) {
 			System.out.println("Erreur lors de la récupération de la voiture");
@@ -129,7 +127,7 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 	}
 	
 	private Vehicule cursorToVehicule(ResultSet resultSet) {
-		Vehicule vehicule = null;
+		Vehicule vehicule = new Vehicule();
 		try {
 			vehicule = new Vehicule();
 			vehicule.setId(resultSet.getInt(VehiculeDAO.ID));
