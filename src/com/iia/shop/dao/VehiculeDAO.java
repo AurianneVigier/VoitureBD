@@ -1,6 +1,4 @@
 package com.iia.shop.dao;
-import com.iia.shop.dao.Connexion;
-import com.iia.shop.entity.Vehicule;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -8,16 +6,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.ResultSet;
+import java.util.List;
+
+import com.iia.shop.entity.Vehicule;
 
 public class VehiculeDAO implements IDAO<Vehicule>{
-	private static final String NOMTABLE = "Voitures";
-	private static final String ID = "Id";
 	private static final String MARQUE = "Brand";
 	private static final String ANNEE = "Year";
 	private static final String VITESSE = "Speed";
 	private static final String MODELE = "Model";
 	private static final String COULEUR = "Color";
 	private static final String PRIX = "Price";
+	private static final String NOMTABLE = "Voitures";
+	private static final String ID = "Id";
 
 	@Override
 	public boolean create(Vehicule object) {
@@ -25,7 +26,7 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 				+ ", " + VehiculeDAO.VITESSE + ", " + VehiculeDAO.MODELE + ", " + VehiculeDAO.COULEUR
 				+ ", " + VehiculeDAO.PRIX
 				+ ") VALUES ('" + object.getMarque() + "', " + object.getYear() + ", " + object.getSpeed() + ", '"
-				+ object.getModel() + "', '" + object.getColor() + "', " + object.getPrice() + ");";
+				+ object.getModel() + "', '" + object.getColor() + "', " + object.getPrice() + ")";
 
 		try {
 			Statement st = Connexion.getConnection().createStatement();
@@ -41,7 +42,7 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 
 	@Override
 	public boolean update(Vehicule object) {
-		String req = "UPDATE " + VehiculeDAO.NOMTABLE + " SET " + VehiculeDAO.MARQUE + " = '" + object.getMarque() + "', "
+		String req = "UPDATE  "+ VehiculeDAO.NOMTABLE + " SET " + VehiculeDAO.MARQUE + " = '" + object.getMarque() + "', "
 				+ VehiculeDAO.ANNEE + " = " + object.getYear() + ", "
 				+ VehiculeDAO.VITESSE + " = " + object.getSpeed() + ", "
 				+ VehiculeDAO.MODELE + " = '" + object.getModel() + "', "
@@ -127,7 +128,7 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 	}
 	
 	private Vehicule cursorToVehicule(ResultSet resultSet) {
-		Vehicule vehicule = new Vehicule();
+		Vehicule vehicule = null;
 		try {
 			vehicule = new Vehicule();
 			vehicule.setId(resultSet.getInt(VehiculeDAO.ID));
