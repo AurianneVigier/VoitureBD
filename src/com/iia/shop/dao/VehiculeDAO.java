@@ -42,26 +42,17 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 
 	@Override
 	public boolean update(Vehicule object) {
-		String req = String.format("UPDATE %s SET %s=%s, %s=%s, %s=%s, %s=%s, %s=%s, %s=%s WHERE %s=?",
-				VehiculeDAO.NOMTABLE,
-				VehiculeDAO.MARQUE,
-				object.getMarque(),
-				VehiculeDAO.ANNEE,
-				object.getYear(),
-				VehiculeDAO.VITESSE,
-				object.getSpeed(),
-				VehiculeDAO.MODELE,
-				object.getModel(),
-				VehiculeDAO.COULEUR,
-				object.getColor(),
-				VehiculeDAO.PRIX,
-				object.getPrice(),
-				VehiculeDAO.ID);
+		String req = "UPDATE  "+ VehiculeDAO.NOMTABLE + " SET " + VehiculeDAO.MARQUE + " = '" + object.getMarque() + "', "
+				+ VehiculeDAO.ANNEE + " = " + object.getYear() + ", "
+				+ VehiculeDAO.VITESSE + " = " + object.getSpeed() + ", "
+				+ VehiculeDAO.MODELE + " = '" + object.getModel() + "', "
+				+ VehiculeDAO.COULEUR + " = '" + object.getColor() + "', "
+				+ VehiculeDAO.PRIX + " = " + object.getPrice()
+				+ " WHERE " + VehiculeDAO.ID + " = " + object.getId();
 		
 		try {
-			PreparedStatement st = Connexion.getConnection().prepareStatement(req);
-			st.setInt(1, object.getId());
-			if (st.executeUpdate() >= 1) {
+			Statement st = Connexion.getConnection().createStatement();
+			if (st.executeUpdate(req) >= 1) {
 				return true;
 			}
 		} catch (SQLException e) {
@@ -93,11 +84,19 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 		String req = String.format("SELECT * FROM %s WHERE %s=%d", VehiculeDAO.NOMTABLE, VehiculeDAO.ID, id);
 
 		try {
-			PreparedStatement st = Connexion.getConnection().prepareStatement(req);
-			ResultSet rs = st.executeQuery();
+			Statement st = Connexion.getConnection().createStatement();
+			ResultSet rs = st.executeQuery(req);
 
 			if (rs.next()) {
-				return this.cursorToVehicule(rs);
+				Vehicule voiture = new Vehicule();
+				voiture.setId(rs.getInt(VehiculeDAO.ID));
+				voiture.setMarque(rs.getString(VehiculeDAO.MARQUE));
+				voiture.setYear(rs.getInt(VehiculeDAO.ANNEE));
+				voiture.setSpeed(rs.getInt(VehiculeDAO.VITESSE));
+				voiture.setModel(rs.getString(VehiculeDAO.MODELE));
+				voiture.setColor(rs.getString(VehiculeDAO.COULEUR));
+				voiture.setPrice(rs.getInt(VehiculeDAO.PRIX));
+				return voiture;
 			}
 		} catch (SQLException e) {
 			System.out.println("Erreur lors de la récupération de la voiture");

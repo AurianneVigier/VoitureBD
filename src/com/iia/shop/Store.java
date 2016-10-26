@@ -7,12 +7,18 @@ import java.util.Scanner;
 import com.iia.shop.dao.VehiculeDAO;
 import com.iia.shop.entity.Vehicule;
 
-public class Store {
+import javax.swing.JFrame;
 
+public class Store {
+	
 	private static ArrayList<Vehicule> vehicules;
 	private static Scanner sc;
 
 	public static void main(String[] args) {
+		
+		Menu choisirAction = new Menu();
+		
+		choisirAction.setVisible(true); // visibilite de la fenetre
 		
 		Store.vehicules = new ArrayList<Vehicule>();
 
@@ -75,8 +81,8 @@ public class Store {
 			break;
 		}
 	}
-	
-	private static void create(Vehicule vehicule) {
+	// private avant
+	public static void create(Vehicule vehicule) {
 		Store.vehicules.add(vehicule);
 	}
 
