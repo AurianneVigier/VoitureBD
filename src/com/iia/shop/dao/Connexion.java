@@ -38,5 +38,4 @@ public class Connexion {
 			e.printStackTrace();
 		}
 	}
-	
 }
