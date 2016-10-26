@@ -210,8 +210,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 			this.dispose(); // quitte la fenetre de l'ajout
 		}
 		else if (e.getSource() == this.ajouterAnnuler){
-			AjouterVehicule voir = new AjouterVehicule();
-			voir.setVisible(false);
+			this.dispose();
 		}	
 	}
 	

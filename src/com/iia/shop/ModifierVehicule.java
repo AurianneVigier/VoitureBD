@@ -32,7 +32,8 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 	private JTextField modifierModele;
 	private JTextField modifierCouleur;
 	private JTextField modifierPrix;
-	private JButton btnValider;
+	private JButton modifierValider;
+	private JButton modifierModifier;
 	private JButton modifierAnnuler;
 
 	/**
@@ -56,7 +57,8 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 	 */
 	public ModifierVehicule() {
 		vehicules = new ArrayList<Vehicule>();
-		btnValider = new JButton("Valider");
+		modifierValider = new JButton("Valider");
+		modifierModifier = new JButton("Modifier");
 		modifierAnnuler = new JButton("Annuler");
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,7 +96,6 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		contentPane.add(voirNumeroVehicule, gbc_voirNumeroVehicule);
 		voirNumeroVehicule.setColumns(10);
 		
-		JButton modifierValider = new JButton("Valider");
 		GridBagConstraints gbc_modifierValider = new GridBagConstraints();
 		gbc_modifierValider.insets = new Insets(0, 0, 5, 5);
 		gbc_modifierValider.gridx = 3;
@@ -197,11 +198,11 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		contentPane.add(modifierPrix, gbc_modifierPrix);
 		modifierPrix.setColumns(10);
 		
-		GridBagConstraints gbc_btnValider = new GridBagConstraints();
-		gbc_btnValider.insets = new Insets(0, 0, 0, 5);
-		gbc_btnValider.gridx = 2;
-		gbc_btnValider.gridy = 11;
-		contentPane.add(btnValider, gbc_btnValider);
+		GridBagConstraints gbc_modifierModifier = new GridBagConstraints();
+		gbc_modifierModifier.insets = new Insets(0, 0, 0, 5);
+		gbc_modifierModifier.gridx = 2;
+		gbc_modifierModifier.gridy = 11;
+		contentPane.add(modifierModifier, gbc_modifierModifier);
 		
 		GridBagConstraints gbc_btnAnnuler = new GridBagConstraints();
 		gbc_btnAnnuler.insets = new Insets(0, 0, 0, 5);
@@ -215,28 +216,50 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		this.modifierModele.addActionListener(this);
 		this.modifierCouleur.addActionListener(this);
 		this.modifierPrix.addActionListener(this);
-		this.btnValider.addActionListener(this);
+		this.modifierValider.addActionListener(this);
+		this.modifierModifier.addActionListener(this);
 		this.modifierAnnuler.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == this.btnValider){
+		if (e.getSource() == this.modifierValider){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
 			vehicule = new Vehicule();
 			// numero du vehicule
 			int i = Integer.parseInt(voirNumeroVehicule.getText());
-			vehicule.setId(i);
-			modifier(vehicule);
+			vehicule = vDao.findById(i);
 		
+			String marque = vehicule.getMarque();
+			int year = vehicule.getYear();
+			int speed = vehicule.getSpeed();
+			String model = vehicule.getModel();
+			String color = vehicule.getColor();
+			int price = (int) vehicule.getPrice();
+			
+			modifierMarque.setText(" " + marque);
+			modifierAnnee.setText(" " + year);
+			modifierVitesse.setText(" " + speed);
+			modifierModele.setText(" " + model);
+			modifierCouleur.setText(" " + color);
+			modifierPrix.setText(" " + price);
+		}
+		else if (e.getSource() == this.modifierModifier){
+			VehiculeDAO vDao = new VehiculeDAO();
+			Vehicule vehicule;
+			vehicule = new Vehicule();
+			// numero du vehicule
+			int i = Integer.parseInt(voirNumeroVehicule.getText());
+			vehicule.setId(i);	
+		
+			modifier(vehicule);
 			vDao.update(vehicule);
 			this.dispose();
 		}
 		else if (e.getSource() == this.modifierAnnuler){
-			ModifierVehicule modifier = new ModifierVehicule();
-			modifier.setVisible(false);
-		}	
+			this.dispose();
+		}
 	}
 	
 	public void modifier(Vehicule vehicule){

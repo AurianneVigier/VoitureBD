@@ -236,16 +236,15 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 			String color = vehicule.getColor();
 			int price = (int) vehicule.getPrice();
 			
-			voirMarque.setText("" + marque);
-			voirAnnee.setText("" + year);
-			voirVitesse.setText("" + speed);
-			voirModele.setText("" + model);
-			voirCouleur.setText("" + color);
-			voirPrix.setText("" + price);
+			voirMarque.setText(" " + marque);
+			voirAnnee.setText(" " + year);
+			voirVitesse.setText(" " + speed);
+			voirModele.setText(" " + model);
+			voirCouleur.setText(" " + color);
+			voirPrix.setText(" " + price);
 		}
 		else if (e.getSource() == this.voirQuitter){
-			VoirUnVehicule voir = new VoirUnVehicule();
-			voir.setVisible(false);
+			this.dispose();
 		}	
 		
 	}
