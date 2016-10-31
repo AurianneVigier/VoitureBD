@@ -12,6 +12,8 @@ import com.iia.shop.entity.Vehicule;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
@@ -33,6 +35,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 	private JTextField ajouterPrix;
 	private JButton ajouterValider;
 	private JButton ajouterAnnuler;
+	private JOptionPane ajouter;
 
 	/**
 	 * Launch the application.
@@ -64,6 +67,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 		JLabel lblPrix = new JLabel("Prix");
 		ajouterValider = new JButton("Valider");
 		ajouterAnnuler = new JButton("Annuler");
+		ajouter = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 443, 383);
@@ -207,6 +211,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 			ajouter(vehicule);
 			//Store.create(vehicule);
 			vDao.create(vehicule);
+			ajouter.showConfirmDialog(null,  "Etes-vous sur de vouloir ajouter ce vehicule ?", "Ajouter un vehicule", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			this.dispose(); // quitte la fenetre de l'ajout
 		}
 		else if (e.getSource() == this.ajouterAnnuler){

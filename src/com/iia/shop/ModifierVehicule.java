@@ -12,6 +12,8 @@ import com.iia.shop.entity.Vehicule;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -35,6 +37,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 	private JButton modifierValider;
 	private JButton modifierModifier;
 	private JButton modifierAnnuler;
+	private JOptionPane modifier;
 
 	/**
 	 * Launch the application.
@@ -60,6 +63,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		modifierValider = new JButton("Valider");
 		modifierModifier = new JButton("Modifier");
 		modifierAnnuler = new JButton("Annuler");
+		modifier = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 454, 426);
@@ -238,12 +242,12 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 			String color = vehicule.getColor();
 			int price = (int) vehicule.getPrice();
 			
-			modifierMarque.setText(" " + marque);
-			modifierAnnee.setText(" " + year);
-			modifierVitesse.setText(" " + speed);
-			modifierModele.setText(" " + model);
-			modifierCouleur.setText(" " + color);
-			modifierPrix.setText(" " + price);
+			modifierMarque.setText("" + marque);
+			modifierAnnee.setText("" + year);
+			modifierVitesse.setText("" + speed);
+			modifierModele.setText("" + model);
+			modifierCouleur.setText("" + color);
+			modifierPrix.setText("" + price);
 		}
 		else if (e.getSource() == this.modifierModifier){
 			VehiculeDAO vDao = new VehiculeDAO();
@@ -255,6 +259,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		
 			modifier(vehicule);
 			vDao.update(vehicule);
+			modifier.showConfirmDialog(null,  "Etes-vous sur de vouloir modifier ce vehicule ?", "Modifier un vehicule", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}
 		else if (e.getSource() == this.modifierAnnuler){

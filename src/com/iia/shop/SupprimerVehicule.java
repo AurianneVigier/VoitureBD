@@ -12,6 +12,8 @@ import com.iia.shop.entity.Vehicule;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
 import java.awt.Insets;
@@ -35,6 +37,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 	private JButton supprimerValider;
 	private JButton supprimerSupprimer;
 	private JButton supprimerAnnuler;
+	private JOptionPane supprimer;
 
 	/**
 	 * Launch the application.
@@ -60,6 +63,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 		supprimerValider = new JButton("Valider");
 		supprimerSupprimer = new JButton("Supprimer");
 		supprimerAnnuler = new JButton("Annuler");
+		supprimer = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 464, 372);
@@ -238,12 +242,12 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 			String color = vehicule.getColor();
 			int price = (int) vehicule.getPrice();
 			
-			supprimerMarque.setText(" " + marque);
-			supprimerAnnee.setText(" " + year);
-			supprimerVitesse.setText(" " + speed);
-			supprimerModele.setText(" " + model);
-			supprimerCouleur.setText(" " + color);
-			supprimerPrix.setText(" " + price);
+			supprimerMarque.setText("" + marque);
+			supprimerAnnee.setText("" + year);
+			supprimerVitesse.setText("" + speed);
+			supprimerModele.setText("" + model);
+			supprimerCouleur.setText("" + color);
+			supprimerPrix.setText("" + price);
 		}
 		else if (e.getSource() == this.supprimerSupprimer){
 			VehiculeDAO vDao = new VehiculeDAO();
@@ -255,6 +259,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 			supprimer(vehicule);
 		
 			vDao.delete(vehicule);
+			supprimer.showConfirmDialog(null,  "Etes-vous sur de vouloir supprimer ce vehicule ?", "Supprimer un vehicule", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}
 		else if (e.getSource() == this.supprimerAnnuler){
