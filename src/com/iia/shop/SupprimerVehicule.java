@@ -38,6 +38,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 	private JButton supprimerSupprimer;
 	private JButton supprimerAnnuler;
 	private JOptionPane supprimer;
+	private JOptionPane annuler;
 
 	/**
 	 * Launch the application.
@@ -64,6 +65,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 		supprimerSupprimer = new JButton("Supprimer");
 		supprimerAnnuler = new JButton("Annuler");
 		supprimer = new JOptionPane();
+		annuler = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 464, 372);
@@ -234,7 +236,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 			// numero du vehicule
 			int i = Integer.parseInt(supprimerNumeroVehicule.getText());
 			vehicule = vDao.findById(i);
-		
+			
 			String marque = vehicule.getMarque();
 			int year = vehicule.getYear();
 			int speed = vehicule.getSpeed();
@@ -263,6 +265,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 			this.dispose();
 		}
 		else if (e.getSource() == this.supprimerAnnuler){
+			annuler.showMessageDialog(null,  "Vous allez quitter le menu suppression", "Annulation de la suppression", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}
 		

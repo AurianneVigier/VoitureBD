@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import java.sql.ResultSet;
 import java.util.List;
 
@@ -97,6 +100,10 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 				voiture.setColor(rs.getString(VehiculeDAO.COULEUR));
 				voiture.setPrice(rs.getInt(VehiculeDAO.PRIX));
 				return voiture;
+			}
+			else {
+				JOptionPane.showMessageDialog(null,  "Ce numero de vehicule n'existe pas. Veuillez en saisir un autre", "Numero de vehicule invalide", JOptionPane.WARNING_MESSAGE);
+				
 			}
 		} catch (SQLException e) {
 			System.out.println("Erreur lors de la récupération de la voiture");

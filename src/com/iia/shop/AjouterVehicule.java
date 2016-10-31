@@ -36,6 +36,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 	private JButton ajouterValider;
 	private JButton ajouterAnnuler;
 	private JOptionPane ajouter;
+	private JOptionPane annuler;
 
 	/**
 	 * Launch the application.
@@ -68,6 +69,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 		ajouterValider = new JButton("Valider");
 		ajouterAnnuler = new JButton("Annuler");
 		ajouter = new JOptionPane();
+		annuler = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 443, 383);
@@ -215,6 +217,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 			this.dispose(); // quitte la fenetre de l'ajout
 		}
 		else if (e.getSource() == this.ajouterAnnuler){
+			annuler.showMessageDialog(null,  "Vous allez quitter le menu ajout", "Annulation de l'ajout", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}	
 	}

@@ -12,6 +12,8 @@ import com.iia.shop.entity.Vehicule;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -35,12 +37,7 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 	private JTextField voirNumeroVehicule;
 	private JButton voirQuitter;
 	private JButton voirValider;
-	private JLabel lblMarque;
-	private JLabel lblAnnee;
-	private JLabel lblVitesse;
-	private JLabel lblModele;
-	private JLabel lblCouleur;
-	private JLabel lblPrix;
+	private JOptionPane quitter;
 
 	/**
 	 * Launch the application.
@@ -65,6 +62,7 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 		vehicules = new ArrayList<Vehicule>();
 		voirValider = new JButton("Valider");
 		voirQuitter = new JButton("Quitter");
+		quitter = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 465, 401);
@@ -244,6 +242,7 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 			voirPrix.setText("" + price);
 		}
 		else if (e.getSource() == this.voirQuitter){
+			quitter.showMessageDialog(null,  "Vous allez quitter ce menu", "Quitter", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}	
 		

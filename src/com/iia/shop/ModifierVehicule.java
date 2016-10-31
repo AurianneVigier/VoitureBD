@@ -38,6 +38,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 	private JButton modifierModifier;
 	private JButton modifierAnnuler;
 	private JOptionPane modifier;
+	private JOptionPane annuler;
 
 	/**
 	 * Launch the application.
@@ -64,6 +65,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		modifierModifier = new JButton("Modifier");
 		modifierAnnuler = new JButton("Annuler");
 		modifier = new JOptionPane();
+		annuler = new JOptionPane();
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 454, 426);
@@ -263,6 +265,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 			this.dispose();
 		}
 		else if (e.getSource() == this.modifierAnnuler){
+			annuler.showMessageDialog(null,  "Vous allez quitter le menu modification", "Annulation de la modification", JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}
 	}
