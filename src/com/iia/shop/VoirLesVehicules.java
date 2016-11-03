@@ -26,7 +26,6 @@ public class VoirLesVehicules extends JFrame implements ActionListener{
 
 	private static ArrayList<Vehicule> vehicules;
 	private JPanel contentPane;
-	private JLabel lblVoirTousLes;
 	private JButton btnVoirLesVehicules;
 	private JLabel lblMarque;
 	private JLabel lblAnnee;
@@ -45,6 +44,7 @@ public class VoirLesVehicules extends JFrame implements ActionListener{
 				try {
 					VoirLesVehicules frame = new VoirLesVehicules();
 					frame.setVisible(true);
+					frame.setTitle("Voir tous les vehicules");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -70,13 +70,6 @@ public class VoirLesVehicules extends JFrame implements ActionListener{
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
-		lblVoirTousLes = new JLabel("Voir tous les vehicules");
-		GridBagConstraints gbc_lblVoirTousLes = new GridBagConstraints();
-		gbc_lblVoirTousLes.insets = new Insets(0, 0, 5, 0);
-		gbc_lblVoirTousLes.gridx = 2;
-		gbc_lblVoirTousLes.gridy = 0;
-		contentPane.add(lblVoirTousLes, gbc_lblVoirTousLes);
 		
 		btnVoirLesVehicules = new JButton("Voir les vehicules");
 		GridBagConstraints gbc_btnVoirLesVehicules = new GridBagConstraints();
@@ -137,8 +130,13 @@ public class VoirLesVehicules extends JFrame implements ActionListener{
 		contentPane.add(list, gbc_list);
 	}
 
+	// ne fonctionne pas
+	
+	// seul le dernier vehicule de la liste sera afficher
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// l'utilisateur clique sur le bouton "Voir les vehicules"
 		if (e.getSource() == this.btnVoirLesVehicules){
 			VehiculeDAO vDao = new VehiculeDAO();
 			vehicules = (ArrayList<Vehicule>) vDao.findAll();

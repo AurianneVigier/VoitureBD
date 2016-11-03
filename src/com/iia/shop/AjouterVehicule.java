@@ -47,6 +47,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 				try {
 					AjouterVehicule frame = new AjouterVehicule();
 					frame.setVisible(true);
+					frame.setTitle("Ajouter un vehicule");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -59,7 +60,6 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 	 */
 	public AjouterVehicule() {
 		vehicules = new ArrayList<Vehicule>();
-		JLabel lblAjouterUnVehicule = new JLabel("Ajouter un vehicule");	
 		JLabel lblMarque = new JLabel("Marque");
 		JLabel lblAnnee = new JLabel("Annee");
 		JLabel lblVitesse = new JLabel("Vitesse");
@@ -82,12 +82,6 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 		gbl_contentPane.columnWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-	
-		GridBagConstraints gbc_lblAjouterUnVehicule = new GridBagConstraints();
-		gbc_lblAjouterUnVehicule.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAjouterUnVehicule.gridx = 1;
-		gbc_lblAjouterUnVehicule.gridy = 0;
-		contentPane.add(lblAjouterUnVehicule, gbc_lblAjouterUnVehicule);
 
 		GridBagConstraints gbc_lblMarque = new GridBagConstraints();
 		gbc_lblMarque.insets = new Insets(0, 0, 5, 5);
@@ -184,12 +178,15 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 		gbc_ajouterValider.insets = new Insets(0, 0, 0, 5);
 		gbc_ajouterValider.gridx = 1;
 		gbc_ajouterValider.gridy = 9;
+		ajouterValider.setBackground(java.awt.Color.green);
 		contentPane.add(ajouterValider, gbc_ajouterValider);
 		
 		GridBagConstraints gbc_ajouterAnnuler = new GridBagConstraints();
 		gbc_ajouterAnnuler.insets = new Insets(0, 0, 0, 5);
 		gbc_ajouterAnnuler.gridx = 2;
 		gbc_ajouterAnnuler.gridy = 9;
+		ajouterAnnuler.setBackground(java.awt.Color.red);
+		ajouterAnnuler.setForeground(java.awt.Color.white);
 		contentPane.add(ajouterAnnuler, gbc_ajouterAnnuler);
 		
 		this.ajouterMarque.addActionListener(this);
@@ -205,19 +202,22 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// l'utilisateur clique sur le bouton "Valider"
 		if (e.getSource() == this.ajouterValider){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
 			vehicule = new Vehicule();
 			
-			ajouter(vehicule);
-			//Store.create(vehicule);
+			// appel de la fonction "ajouter" qui ajoute une voiture avec les informations renseignees par l'utilisateur
+			ajouter(vehicule);			
 			vDao.create(vehicule);
 			ajouter.showConfirmDialog(null,  "Etes-vous sur de vouloir ajouter ce vehicule ?", "Ajouter un vehicule", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			this.dispose(); // quitte la fenetre de l'ajout
 		}
+		// l'utilisateur clique sur le bouton "Annuler"
 		else if (e.getSource() == this.ajouterAnnuler){
 			annuler.showMessageDialog(null,  "Vous allez quitter le menu ajout", "Annulation de l'ajout", JOptionPane.INFORMATION_MESSAGE);
+			// fermer la fenetre
 			this.dispose();
 		}	
 	}
@@ -232,7 +232,7 @@ public class AjouterVehicule extends JFrame implements ActionListener{
 		vehicule.setModel(ajouterModele.getText());
 		vehicule.setColor(ajouterCouleur.getText());
 		res = Integer.parseInt(ajouterPrix.getText());
-		vehicule.setPrice(res);
+		vehicule.setPrice(res);		
 		vehicules.add(vehicule);
 	}
 

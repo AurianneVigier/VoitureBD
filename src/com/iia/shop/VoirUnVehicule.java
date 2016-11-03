@@ -48,6 +48,7 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 				try {
 					VoirUnVehicule frame = new VoirUnVehicule();
 					frame.setVisible(true);
+					frame.setTitle("Voir un vehicule");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -75,13 +76,6 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
-		JLabel lblVoirUnVehicule = new JLabel("Voir un vehicule");
-		GridBagConstraints gbc_lblVoirUnVehicule = new GridBagConstraints();
-		gbc_lblVoirUnVehicule.insets = new Insets(0, 0, 5, 5);
-		gbc_lblVoirUnVehicule.gridx = 2;
-		gbc_lblVoirUnVehicule.gridy = 0;
-		contentPane.add(lblVoirUnVehicule, gbc_lblVoirUnVehicule);
 		
 		JLabel lblNumeroDuVehicule = new JLabel("Numero du vehicule");
 		GridBagConstraints gbc_lblNumeroDuVehicule = new GridBagConstraints();
@@ -205,6 +199,8 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 		gbc_voirQuitter.insets = new Insets(0, 0, 0, 5);
 		gbc_voirQuitter.gridx = 2;
 		gbc_voirQuitter.gridy = 11;
+		voirQuitter.setBackground(java.awt.Color.red);
+		voirQuitter.setForeground(java.awt.Color.white);
 		contentPane.add(voirQuitter, gbc_voirQuitter);
 		
 		this.voirMarque.addActionListener(this);
@@ -219,14 +215,16 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// l'utilisateur clique sur le bouton "Valider"
 		if (e.getSource() == this.voirValider){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
 			vehicule = new Vehicule();
-			// numero du vehicule
+			// l'utilisateur saisit le numero du vehicule
 			int i = Integer.parseInt(voirNumeroVehicule.getText());
 			vehicule = vDao.findById(i);
 		
+			// si le vehicule existe alors les informations s'afficheront dans les TextField
 			String marque = vehicule.getMarque();
 			int year = vehicule.getYear();
 			int speed = vehicule.getSpeed();
@@ -241,8 +239,10 @@ public class VoirUnVehicule extends JFrame implements ActionListener{
 			voirCouleur.setText("" + color);
 			voirPrix.setText("" + price);
 		}
+		// l'utilisateur clique sur le bouton "Quitter"
 		else if (e.getSource() == this.voirQuitter){
 			quitter.showMessageDialog(null,  "Vous allez quitter ce menu", "Quitter", JOptionPane.INFORMATION_MESSAGE);
+			// fermer la fenetre
 			this.dispose();
 		}	
 		

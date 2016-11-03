@@ -102,8 +102,9 @@ public class VehiculeDAO implements IDAO<Vehicule>{
 				return voiture;
 			}
 			else {
+				// si le numero du vehicule n'existe pas alors on affiche un message a l'utilisateur
+				// en lui demandant d'en saisir un autre
 				JOptionPane.showMessageDialog(null,  "Ce numero de vehicule n'existe pas. Veuillez en saisir un autre", "Numero de vehicule invalide", JOptionPane.WARNING_MESSAGE);
-				
 			}
 		} catch (SQLException e) {
 			System.out.println("Erreur lors de la récupération de la voiture");

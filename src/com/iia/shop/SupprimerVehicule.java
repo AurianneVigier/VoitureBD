@@ -49,6 +49,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 				try {
 					SupprimerVehicule frame = new SupprimerVehicule();
 					frame.setVisible(true);
+					frame.setTitle("Supprimer un vehicule");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -78,13 +79,6 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 		gbl_contentPane.columnWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
-		JLabel lblSupprimerUnVehicule = new JLabel("Supprimer un vehicule");
-		GridBagConstraints gbc_lblSupprimerUnVehicule = new GridBagConstraints();
-		gbc_lblSupprimerUnVehicule.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSupprimerUnVehicule.gridx = 1;
-		gbc_lblSupprimerUnVehicule.gridy = 0;
-		contentPane.add(lblSupprimerUnVehicule, gbc_lblSupprimerUnVehicule);
 		
 		JLabel lblNumeroDuVehicule = new JLabel("Numero du vehicule");
 		GridBagConstraints gbc_lblNumeroDuVehicule = new GridBagConstraints();
@@ -208,12 +202,15 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 		gbc_supprimerSupprimer.insets = new Insets(0, 0, 0, 5);
 		gbc_supprimerSupprimer.gridx = 1;
 		gbc_supprimerSupprimer.gridy = 11;
+		supprimerSupprimer.setBackground(java.awt.Color.green);
 		contentPane.add(supprimerSupprimer, gbc_supprimerSupprimer);
 		
 		GridBagConstraints gbc_supprimerAnnuler = new GridBagConstraints();
 		gbc_supprimerAnnuler.insets = new Insets(0, 0, 0, 5);
 		gbc_supprimerAnnuler.gridx = 2;
 		gbc_supprimerAnnuler.gridy = 11;
+		supprimerAnnuler.setBackground(java.awt.Color.red);
+		supprimerAnnuler.setForeground(java.awt.Color.white);
 		contentPane.add(supprimerAnnuler, gbc_supprimerAnnuler);
 		
 		this.supprimerMarque.addActionListener(this);
@@ -229,14 +226,16 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// l'utilisateur clique sur le bouton "Valider"
 		if (e.getSource() == this.supprimerValider){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
 			vehicule = new Vehicule();
-			// numero du vehicule
+			// l'utilisateur saisit le numero du vehicule
 			int i = Integer.parseInt(supprimerNumeroVehicule.getText());
 			vehicule = vDao.findById(i);
 			
+			// si le vehicule existe alors les informations s'afficheront dans les TextField
 			String marque = vehicule.getMarque();
 			int year = vehicule.getYear();
 			int speed = vehicule.getSpeed();
@@ -251,6 +250,7 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 			supprimerCouleur.setText("" + color);
 			supprimerPrix.setText("" + price);
 		}
+		// l'utilisateur clique sur le bouton "Supprimer"
 		else if (e.getSource() == this.supprimerSupprimer){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
@@ -258,14 +258,18 @@ public class SupprimerVehicule extends JFrame implements ActionListener{
 			// numero du vehicule
 			int i = Integer.parseInt(supprimerNumeroVehicule.getText());
 			vehicule.setId(i);
+			
+			// appel de la fonction "supprimer" qui supprime la voiture selectionnee par l'utilisateur
 			supprimer(vehicule);
 		
 			vDao.delete(vehicule);
 			supprimer.showConfirmDialog(null,  "Etes-vous sur de vouloir supprimer ce vehicule ?", "Supprimer un vehicule", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}
+		// l'utilisateur clique sur le bouton "Annuler"
 		else if (e.getSource() == this.supprimerAnnuler){
 			annuler.showMessageDialog(null,  "Vous allez quitter le menu suppression", "Annulation de la suppression", JOptionPane.INFORMATION_MESSAGE);
+			// fermer la fenetre
 			this.dispose();
 		}
 		

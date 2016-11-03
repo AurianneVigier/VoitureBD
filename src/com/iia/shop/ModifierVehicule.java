@@ -49,6 +49,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 				try {
 					ModifierVehicule frame = new ModifierVehicule();
 					frame.setVisible(true);
+					frame.setTitle("Modifier un vehicule");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -78,13 +79,6 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
-		
-		JLabel lblModifierUnVehicule = new JLabel("Modifier un vehicule");
-		GridBagConstraints gbc_lblModifierUnVehicule = new GridBagConstraints();
-		gbc_lblModifierUnVehicule.insets = new Insets(0, 0, 5, 5);
-		gbc_lblModifierUnVehicule.gridx = 2;
-		gbc_lblModifierUnVehicule.gridy = 0;
-		contentPane.add(lblModifierUnVehicule, gbc_lblModifierUnVehicule);
 		
 		JLabel lblNumeroDuVehicule = new JLabel("Numero du vehicule");
 		GridBagConstraints gbc_lblNumeroDuVehicule = new GridBagConstraints();
@@ -208,12 +202,15 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 		gbc_modifierModifier.insets = new Insets(0, 0, 0, 5);
 		gbc_modifierModifier.gridx = 2;
 		gbc_modifierModifier.gridy = 11;
-		contentPane.add(modifierModifier, gbc_modifierModifier);
+		modifierModifier.setBackground(java.awt.Color.green);
+		contentPane.add(modifierModifier, gbc_modifierModifier);		
 		
 		GridBagConstraints gbc_btnAnnuler = new GridBagConstraints();
 		gbc_btnAnnuler.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAnnuler.gridx = 3;
 		gbc_btnAnnuler.gridy = 11;
+		modifierAnnuler.setBackground(java.awt.Color.red);
+		modifierAnnuler.setForeground(java.awt.Color.white);
 		contentPane.add(modifierAnnuler, gbc_btnAnnuler);
 		
 		this.modifierMarque.addActionListener(this);
@@ -229,14 +226,16 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// l'utilisateur clique sur le bouton "Valider"
 		if (e.getSource() == this.modifierValider){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
 			vehicule = new Vehicule();
-			// numero du vehicule
+			// l'utilisateur saisit le numero du vehicule
 			int i = Integer.parseInt(voirNumeroVehicule.getText());
 			vehicule = vDao.findById(i);
-		
+			
+			// si le vehicule existe alors les informations s'afficheront dans les TextField
 			String marque = vehicule.getMarque();
 			int year = vehicule.getYear();
 			int speed = vehicule.getSpeed();
@@ -251,6 +250,7 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 			modifierCouleur.setText("" + color);
 			modifierPrix.setText("" + price);
 		}
+		// l'utilisateur clique sur le bouton "Valider"
 		else if (e.getSource() == this.modifierModifier){
 			VehiculeDAO vDao = new VehiculeDAO();
 			Vehicule vehicule;
@@ -259,13 +259,16 @@ public class ModifierVehicule extends JFrame implements ActionListener{
 			int i = Integer.parseInt(voirNumeroVehicule.getText());
 			vehicule.setId(i);	
 		
+			// appel de la fonction "modifier" qui remplace les anciennes informations par celles renseignees par l'utilisateur
 			modifier(vehicule);
 			vDao.update(vehicule);
 			modifier.showConfirmDialog(null,  "Etes-vous sur de vouloir modifier ce vehicule ?", "Modifier un vehicule", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 			this.dispose();
 		}
+		// l'utilisateur clique sur le bouton "Annuler"
 		else if (e.getSource() == this.modifierAnnuler){
 			annuler.showMessageDialog(null,  "Vous allez quitter le menu modification", "Annulation de la modification", JOptionPane.INFORMATION_MESSAGE);
+			// fermer la fenetre
 			this.dispose();
 		}
 	}
